@@ -43,6 +43,12 @@ export const orderType = defineType({
             validation: (Rule) => Rule.required().email(),
         }),
         defineField({
+            name: "stripePaymentIntentId", 
+            title: "Stripe Payment Intent ID",
+            type: "string",
+            validation: (Rule) => Rule.required(),
+        }),
+        defineField({
             name: "products",
             title: "Products",
             type: "array",
