@@ -8,7 +8,13 @@ function Header() {
   const { user } = useUser();
 
   const createClearkPasskey = async () => {
-    await user?.createPasskey()
+
+    try{
+      const response = await user?.createPasskey()
+      console.log(response)
+    }catch(e){
+       console.log('Error:',JSON.stringify(e,null,2))
+    }
   }
   return (
     <header className="flex flex-wrap justify-between items-center px-4 py-2">
