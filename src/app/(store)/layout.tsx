@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/shared/Header";
+import { SanityLive } from "@/sanity/lib/live";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,8 +21,10 @@ export default function RootLayout({
         <body suppressHydrationWarning>
           <main>
             <Header />
-          </main>
           {children}
+          </main>
+
+          <SanityLive/>
         </body>
       </html>
     </ClerkProvider>
