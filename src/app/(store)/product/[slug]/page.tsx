@@ -1,3 +1,5 @@
+import AddToBasketButton from "@/components/shared/addToBasketButton";
+import { Button } from "@/components/ui/button";
 import { urlFor } from "@/lib/imageUrl";
 import { getProductBySlug } from "@/sanity/lib/products/getProductBySlug";
 import { PortableText } from "next-sanity";
@@ -54,6 +56,12 @@ async function ProductPage({
               )}
             </div>
           </div>
+
+              <div className="mt-6">
+                <AddToBasketButton product={product} disabled={isOutOfStock}></AddToBasketButton>
+
+              </div>
+
         </div>
       </div>
     </div>
