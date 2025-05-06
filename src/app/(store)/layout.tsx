@@ -17,8 +17,8 @@ export default function RootLayout({
   return (
     <ClerkProvider dynamic>
       <html lang="en">
-        <body suppressHydrationWarning>
-          <main>
+        <body  suppressHydrationWarning>
+          <main className="">
             <Header />
           {children}
           </main>
