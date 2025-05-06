@@ -13,8 +13,8 @@ function ProductThumb({ product }: { product: Product }) {
         border border-gray-300 p-4 w-[220px] rounded-[40px]   transition-transform duration-200 ease-in-out cursor-pointer
          bg-white
         group flex flex-col shadow-sm hover:shadow-md overflow-hidden ${
-        isOutOfStock ? "opacity-50" : ""
-      }`}
+          isOutOfStock ? "opacity-50" : ""
+        }`}
     >
       <div className="relative aspect-square size-full overflow-hidden">
         {product.image && (
@@ -40,7 +40,7 @@ function ProductThumb({ product }: { product: Product }) {
         </h2>
 
         <p className="mt-2 text-sm text-black font-extrabold">
-        ${product.price}
+          ${product.price}
         </p>
       </div>
     </Link>

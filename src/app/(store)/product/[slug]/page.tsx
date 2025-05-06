@@ -26,7 +26,7 @@ async function ProductPage({
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div
-          className={`relative aspect-square overflow-hidden rounded-lg shadow-lg ${
+          className={`relative aspect-square overflow-hidden rounded-lg cursor-pointer${
             isOutOfStock ? "opacity-50" : ""
           }`}
         >
@@ -59,7 +59,6 @@ async function ProductPage({
 
               <div className="mt-6">
                 <AddToBasketButton product={product} disabled={isOutOfStock}></AddToBasketButton>
-
               </div>
 
         </div>

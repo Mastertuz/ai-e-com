@@ -30,6 +30,7 @@ export function CategorySelectorComponent({
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string>("");
   const router = useRouter();
+  console.log("Categories", categories.map((c) => c.title));
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -59,7 +60,7 @@ export function CategorySelectorComponent({
                 );
                 if (selectedCategory?.slug?.current) {
                   setValue(selectedCategory._id);
-                  router.push(`/categories/${selectedCategory.slug.current}`);
+                  router.push(`/categories/${selectedCategory.slug?.current}`);
                   setOpen(false);
                 }
               }
@@ -74,7 +75,7 @@ export function CategorySelectorComponent({
                   value={category.title}
                   onSelect={() => {
                     setValue(value === category._id ? "" : category._id);
-                    router.push("/categories/${category.slug?.current}");
+                    router.push(`/categories/${category.slug?.current}`);
                     setOpen(false);
                   }}
                 >

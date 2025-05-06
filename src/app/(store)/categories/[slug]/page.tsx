@@ -2,9 +2,11 @@ import ProductsView from "@/components/shared/ProductsView";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
 import { getProductsByCategory } from "@/sanity/lib/products/getproductsByCategory";
 
-async function CategoryPage({ params }: { params: { slug: string } }) {
-    const { slug } = params;
-
+async function CategoryPage(
+    
+    { params }: { params: Promise<{ slug: string }>}) {
+    const { slug } = await params;
+    console.log('slug', slug);
     const products = await getProductsByCategory(slug);
     const categories = await getAllCategories();
 
