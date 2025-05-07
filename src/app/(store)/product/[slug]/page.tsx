@@ -45,23 +45,27 @@ async function ProductPage({
         </div>
         <div className="flex flex-col justify-between">
           <div>
-            <h1 className="text-3xl text-white font-bold mb-4">{product.name}</h1>
+            <h1 className="text-3xl text-white font-bold mb-4">
+              {product.name}
+            </h1>
             <div className="text-xl text-white font-semibold mb-4">
               Price : £{product.price?.toFixed(2)}
             </div>
-            <div className="prose max-w-none mb-6">
+            <div className="prose text-white max-w-none mb-6">
               {Array.isArray(product.description) && (
                 <PortableText value={product.description} />
               )}
             </div>
           </div>
-              <div className="mb-6">
-                <div className="text-lg  text-white  font-semibold mb-2">
-                  Quantity
-                </div>
-                <AddToBasketButton product={product} disabled={isOutOfStock}/>
-              </div>
-
+          <div className="mb-6">
+            <div className="text-white text-xl mb-2">
+              Items available: <span className="font-bold ">{product.stock}</span>
+            </div>
+            <div className="text-lg  text-white  font-semibold mb-2">
+              Quantity
+            </div>
+            <AddToBasketButton product={product} disabled={isOutOfStock} />
+          </div>
         </div>
       </div>
     </div>

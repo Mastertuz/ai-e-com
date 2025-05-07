@@ -1,4 +1,3 @@
-
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Product } from '../sanity.types';
@@ -17,12 +16,20 @@ interface BasketState {
     getItemCount: (productId: string) => number;
     getGroupedItems: () => BasketItem[];
 }
+
 const useBasketStore = create<BasketState>()(
     persist(
         (set, get) => ({
             items: [],
             addItem: (product) => set((state) => {
                 const existingItem = state.items.find(item => item.product._id === product._id);
+                const currentQuantity = existingItem ? existingItem.quantity : 0;
+                const stock = product.stock ?? 0;
+
+                if (currentQuantity >= stock) {
+                    return state; // Prevent adding if quantity would exceed stock
+                }
+
                 if (existingItem) {
                     return {
                         items: state.items.map(item =>
