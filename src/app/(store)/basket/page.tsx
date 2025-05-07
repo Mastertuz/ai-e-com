@@ -56,21 +56,21 @@ function BasketPage() {
   if (groupedItems.length === 0) {
     return (
       <div className="container mx-auto p-4 flex flex-col items-center justify-center min-h-[50vh]">
-        <h1 className="text-2xl font-bold mb-6 text-gray-800">Your Basket</h1>
-        <p className="text-gray-600 text-lg">Your basket is empty.</p>
+        <h1 className="text-2xl font-bold mb-6 text-white">Your Basket</h1>
+        <p className="text-white text-lg">Your basket is empty.</p>
       </div>
     );
   }
 
   return (
     <div className="container mx-auto p-4 max-w-6xl">
-      <h1 className="text-2xl font-bold mb-4">Your Basket</h1>
+      <h1 className="text-2xl text-white font-bold mb-4">Your Basket</h1>
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-grow">
           {groupedItems?.map((item) => (
             <div
               key={item.product._id}
-              className="mb-4 p-4 border rounded flex items-center justify-between"
+              className="mb-4 p-4 border border-blue-500 rounded flex items-center justify-between"
             >
               <div
                 className="flex items-center cursor-pointer flex-1 min-w-0"
@@ -90,10 +90,10 @@ function BasketPage() {
                   )}
                 </div>
                 <div className="min-w-0">
-                  <h2 className="text-lg sm:text-xl font-semibold truncate">
+                  <h2 className="text-lg text-white sm:text-xl font-semibold truncate">
                     {item.product.name}
                   </h2>
-                  <p className="text-sm sm:text-base">
+                  <p className="text-sm sm:text-base text-white">
                     Price: £
                     {((item.product.price ?? 0) * item.quantity).toFixed(2)}
                   </p>
@@ -127,7 +127,7 @@ function BasketPage() {
             <button
               onClick={handleCheckout}
               disabled={isLoading}
-              className="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+              className="mt-4 cursor-pointer w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
             >
               {isLoading ? "Processing..." : "Checkout"}
             </button>
