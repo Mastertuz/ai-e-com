@@ -10,11 +10,11 @@ function ProductThumb({ product }: { product: Product }) {
     <Link
       href={`/product/${product.slug?.current}`}
       className={`
-        border border-gray-300 p-4 w-[220px] rounded-[40px]   transition-transform duration-200 ease-in-out cursor-pointer
-         bg-white
+        border border-blue-500 p-4 w-[220px] rounded-[40px]   transition-transform duration-200 ease-in-out cursor-pointer
+         bg-transparent
         group flex flex-col shadow-sm hover:shadow-md overflow-hidden ${
-          isOutOfStock ? "opacity-50" : ""
-        }`}
+        isOutOfStock ? "opacity-50" : ""
+      }`}
     >
       <div className="relative aspect-square size-full overflow-hidden">
         {product.image && (
@@ -35,14 +35,15 @@ function ProductThumb({ product }: { product: Product }) {
       </div>
 
       <div className="p-4 text-center">
-        <h2 className="text-lg font-semibold text-gray-800 truncate">
+        <h2 className="text-lg font-semibold text-white truncate">
           {product.name}
         </h2>
 
-        <p className="mt-2 text-sm text-black font-extrabold">
-          ${product.price}
+        <p className="mt-2 text-sm text-white font-extrabold">
+        ${product.price}
         </p>
       </div>
+
     </Link>
   );
 }

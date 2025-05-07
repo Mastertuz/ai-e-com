@@ -1,5 +1,4 @@
 import AddToBasketButton from "@/components/shared/addToBasketButton";
-import { Button } from "@/components/ui/button";
 import { urlFor } from "@/lib/imageUrl";
 import { getProductBySlug } from "@/sanity/lib/products/getProductBySlug";
 import { PortableText } from "next-sanity";
@@ -26,7 +25,7 @@ async function ProductPage({
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div
-          className={`relative aspect-square overflow-hidden rounded-lg cursor-pointer${
+          className={`relative aspect-square  overflow-hidden rounded-lg cursor-pointer${
             isOutOfStock ? "opacity-50" : ""
           }`}
         >
@@ -35,7 +34,7 @@ async function ProductPage({
               src={urlFor(product.image).url()}
               alt={product.name ?? "Product image"}
               fill
-              className="object-contain transition-transform duration-300 hover:scale-105"
+              className="object-contain max-w-2xl transition-transform duration-300 hover:scale-105"
             />
           )}
           {isOutOfStock && (
@@ -46,9 +45,9 @@ async function ProductPage({
         </div>
         <div className="flex flex-col justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-            <div className="text-xl font-semibold mb-4">
-              £{product.price?.toFixed(2)}
+            <h1 className="text-3xl text-white font-bold mb-4">{product.name}</h1>
+            <div className="text-xl text-white font-semibold mb-4">
+              Price : £{product.price?.toFixed(2)}
             </div>
             <div className="prose max-w-none mb-6">
               {Array.isArray(product.description) && (
@@ -56,9 +55,11 @@ async function ProductPage({
               )}
             </div>
           </div>
-
-              <div className="mt-6">
-                <AddToBasketButton product={product} disabled={isOutOfStock}></AddToBasketButton>
+              <div className="mb-6">
+                <div className="text-lg  text-white  font-semibold mb-2">
+                  Quantity
+                </div>
+                <AddToBasketButton product={product} disabled={isOutOfStock}/>
               </div>
 
         </div>

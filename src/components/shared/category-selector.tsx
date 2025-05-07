@@ -38,7 +38,7 @@ export function CategorySelectorComponent({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full max-w-full relative flex justify-center sm:justify-start sm:flex-none items-center space-x-2 bg-blue-500 hover:bg-blue-700 hover:text-white text-white font-bold py-2 px-4 rounded"
+          className="w-full cursor-pointer max-w-full relative flex justify-center sm:justify-start sm:flex-none items-center space-x-2 bg-blue-500 hover:bg-blue-700 hover:text-white text-white font-bold py-2 px-4 rounded border-none"
         >
           {value
             ? categories.find((category) => category._id === value)?.title
@@ -73,6 +73,7 @@ export function CategorySelectorComponent({
                 <CommandItem
                   key={category._id}
                   value={category.title}
+                  className="cursor-pointer"
                   onSelect={() => {
                     setValue(value === category._id ? "" : category._id);
                     router.push(`/categories/${category.slug?.current}`);

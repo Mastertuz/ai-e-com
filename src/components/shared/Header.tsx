@@ -28,7 +28,7 @@ function Header() {
             type="text"
             name="query"
             placeholder="Search for products"
-            className="bg-gray-100 text-gray-800 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 border w-full max-w-4xl"
+            className="bg-black text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 border border-blue-500 w-full max-w-4xl"
           />
         </Form>
 
@@ -61,12 +61,16 @@ function Header() {
                 <UserButton />
 
                 <div className="hidden sm:block text-xs">
-                  <p className="text-gray-400">Welcome Back</p>
-                  <p className="font-bold">{user.fullName}!</p>
+                  <p className="text-gray-100">Welcome Back</p>
+                  <p className="font-bold text-white">{user.fullName}!</p>
                 </div>
               </div>
             ) : (
-              <SignInButton mode="modal" />
+              <SignInButton mode="modal">
+                <span className="text-white cursor-pointer font-bold">
+                Sign In
+                </span>
+              </SignInButton>
             )}
 
           
