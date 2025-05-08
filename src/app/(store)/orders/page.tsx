@@ -1,7 +1,9 @@
 import { formatCurrency } from "@/lib/formatCurrency";
+import { urlFor } from "@/lib/imageUrl";
 import { getMyOrders } from "@/sanity/lib/orders/getMyOrders";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 async function Orders() {
   const { userId } = await auth();
@@ -45,7 +47,7 @@ async function Orders() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center p-4 sm:p-6">
                     <div className="flex items-center">
                       <span className="text-sm mr-2">Status:</span>
                       <span
@@ -67,7 +69,7 @@ async function Orders() {
                   </div>
 
                   {order.amountDiscount ? (
-                    <div className="mt-4 p-3 sm:p-4 bg-red-50 rounded-lg">
+                    <div className="mt-4 p-3 sm:p-4 bg-red-50 rounded-lg mx-4 sm:mx-6">
                       <p className="text-red-600 font-medium mb-1 text-sm sm:text-base">
                         Discount Applied:{" "}
                         {formatCurrency(order.amountDiscount, order.currency)}
@@ -81,10 +83,53 @@ async function Orders() {
                       </p>
                     </div>
                   ) : null}
+
+                  <div className="px-4 py-3 sm:px-6 sm:py-4">
+                    <p className="text-sm font-semibold text-gray-600 mb-3 sm:mb-4">
+                      Order Items
+                    </p>
+
+                    <div className="space-y-3 sm:space-y-4">
+                      {order.products?.map((product) => (
+                        <div
+                          key={product.product?._id}
+                          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-2 border-b last:border-b-0"
+                        >
+                          <div className="flex items-center gap-3 sm:gap-4 w-full">
+                            {product.product?.image && (
+                              <div className="relative h-14 w-14 sm:h-16 sm:w-16 flex-shrink-0 rounded-md overflow-hidden">
+                                <Image
+                                  src={urlFor(product.product.image).url()}
+                                  alt={product.product?.name ?? ""}
+                                  className="object-cover"
+                                  fill
+                                />
+                              </div>
+                            )}
+                            <div className="flex-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                              <div>
+                                <p className="font-medium text-sm sm:text-base">
+                                  {product.product?.name}
+                                </p>
+                                <p className="text-sm text-gray-600">
+                                  Quantity: {product.quantity ?? "N/A"}
+                                </p>
+                              </div>
+                              <p className="font-medium">
+                                {product.product?.price && product.quantity
+                                  ? formatCurrency(
+                                      product.product.price * product.quantity,
+                                      order.currency
+                                    )
+                                  : "N/A"}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-
-
-
               ))}
             </div>
           )}

@@ -106,6 +106,8 @@ export type Order = {
     quantity?: number;
     _key: string;
   }>;
+  totalPrice?: number;
+  currency?: string;
   amountDiscount?: number;
   status?: "pending" | "paid" | "shipped" | "delivered" | "cancelled";
   orderDate?: string;
@@ -362,6 +364,8 @@ export type MY_ORDERS_QUERYResult = Array<{
     quantity?: number;
     _key: string;
   }> | null;
+  totalPrice?: number;
+  currency?: string;
   amountDiscount?: number;
   status?: "cancelled" | "delivered" | "paid" | "pending" | "shipped";
   orderDate?: string;
