@@ -7,12 +7,8 @@ import AddToBasketButton from "@/components/shared/addToBasketButton";
 import { urlFor } from "@/lib/imageUrl";
 import Image from "next/image";
 import Loader from "@/components/shared/Loader";
-export type Metadata = {
-    orderNumber: string;
-    customerName: string;
-    customerEmail: string;
-    clerkUserId: string;
-};
+import { createCheckoutSession, Metadata } from "../../../../actions/createCheckOutSession";
+
 function BasketPage() {
   const groupedItems = useBasketStore((state) => state.getGroupedItems());
   const { isSignedIn } = useAuth();
@@ -42,7 +38,7 @@ function BasketPage() {
             clerkUserId: user!.id,
         };
     
-        const checkoutUrl =''
+        const checkoutUrl = await createCheckoutSession(groupedItems,metadata)
     
         if (checkoutUrl) {
             window.location.href = checkoutUrl;
@@ -90,7 +86,7 @@ function BasketPage() {
                   )}
                 </div>
                 <div className="min-w-0">
-                  <h2 className="text-lg text-white sm:text-xl font-semibold truncate">
+                  <h2 className="text-sm xs:text-lg text-white sm:text-xl font-semibold truncate">
                     {item.product.name}
                   </h2>
                   <p className="text-sm sm:text-base text-white">

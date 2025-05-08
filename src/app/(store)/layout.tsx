@@ -18,7 +18,7 @@ export default function RootLayout({
     <ClerkProvider dynamic>
       <html lang="en">
         <body className="bg-[#13141B]"  suppressHydrationWarning>
-          <main className="">
+          <main className="bg-[#13141B]">
             <Header />
           {children}
           </main>
