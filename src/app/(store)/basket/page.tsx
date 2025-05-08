@@ -7,7 +7,7 @@ import AddToBasketButton from "@/components/shared/addToBasketButton";
 import { urlFor } from "@/lib/imageUrl";
 import Image from "next/image";
 import Loader from "@/components/shared/Loader";
-import { createCheckoutSession, Metadata } from "../../../../actions/createCheckOutSession";
+import { createCheckoutSession, Metadata} from "../../../../actions/createCheckoutSession";
 
 function BasketPage() {
   const groupedItems = useBasketStore((state) => state.getGroupedItems());
