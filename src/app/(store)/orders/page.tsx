@@ -22,17 +22,15 @@ async function Orders() {
             </div>
           ) : (
             <div className="space-y-6 sm:space-y-8">
-              {orders.map((order) => (
+              {orders.map((order, orderIndex) => (
                 <div
-                  key={order.orderNumber}
-                  className=" border border-blue-500 rounded-lg shadow-sm overflow-hidden"
+                  key={`${order.orderNumber}-${orderIndex}`} // Ensure unique key for orders
+                  className="border border-blue-500 rounded-lg shadow-sm overflow-hidden"
                 >
                   <div className="p-4 sm:p-6 border-b border-blue-500">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center mb-4">
                       <div>
-                        <p className="text-sm text-white mb-1 font-bold">
-                          Order Number
-                        </p>
+                        <p className="text-sm text-white mb-1 font-bold">Order Number</p>
                         <p className="font-mono text-sm text-green-600 break-all">
                           {order.orderNumber}
                         </p>
@@ -90,9 +88,9 @@ async function Orders() {
                     </p>
 
                     <div className="space-y-3 sm:space-y-4">
-                      {order.products?.map((product) => (
+                      {order.products?.map((product, productIndex) => (
                         <div
-                          key={product.product?._id}
+                          key={`${product.product?._id}-${productIndex}`} // Ensure unique key for products
                           className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-2 border-b border-blue-500 last:border-b-0"
                         >
                           <div className="flex items-center gap-3 sm:gap-4 w-full">

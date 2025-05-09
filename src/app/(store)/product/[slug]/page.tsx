@@ -6,6 +6,28 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 export const dynamic = "force-dynamic";
 export const revalidate = 60;
+import OpenAI from "openai";
+const goida ='goida'
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+async function getSimilarProductName(productName: string): Promise<string> {
+  const completion = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    store: true,
+    messages: [
+      {
+        role: "user",
+        content: `Suggest a similar product to "${productName}" and return only the name of the similar product.`,
+      },
+    ],
+  });
+
+  const similarProduct = completion.choices[0].message.content ?? "Unknown Product";
+  return similarProduct;
+}
+
 async function ProductPage({
   params,
 }: {
@@ -15,9 +37,14 @@ async function ProductPage({
 }) {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
-
+  
   if (!product) {
     return notFound();
+  }
+  let similar=''
+  // Fetch and log similar product name
+  if (product.name) {
+     similar = await getSimilarProductName(product.name);
   }
 
   const isOutOfStock = product?.stock != null && product?.stock <= 0;
@@ -26,7 +53,7 @@ async function ProductPage({
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div
-          className={`relative aspect-square  overflow-hidden rounded-lg cursor-pointer${
+          className={`relative aspect-square overflow-hidden rounded-lg cursor-pointer${
             isOutOfStock ? "opacity-50" : ""
           }`}
         >
@@ -58,15 +85,20 @@ async function ProductPage({
               )}
             </div>
           </div>
+           <div className="text-white text-3xl"> 
+           Ai suggestion for {product.name} :
+           {similar} 
+        </div>
           <div className="mb-6">
             <div className="text-white text-xl mb-2">
-              Items available: <span className="font-bold ">{product.stock}</span>
+              Items available: <span className="font-bold">{product.stock}</span>
             </div>
-            <div className="text-lg  text-white  font-semibold mb-2">
+            <div className="text-lg text-white font-semibold mb-2">
               Quantity
             </div>
             <AddToBasketButton product={product} disabled={isOutOfStock} />
           </div>
+       
         </div>
       </div>
     </div>
