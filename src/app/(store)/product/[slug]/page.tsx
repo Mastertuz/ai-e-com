@@ -4,7 +4,8 @@ import { getProductBySlug } from "@/sanity/lib/products/getProductBySlug";
 import { PortableText } from "next-sanity";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 async function ProductPage({
   params,
 }: {
