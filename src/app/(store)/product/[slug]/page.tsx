@@ -7,7 +7,6 @@ import { notFound } from "next/navigation";
 export const dynamic = "force-dynamic";
 export const revalidate = 60;
 import OpenAI from "openai";
-const goida ='goida'
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
