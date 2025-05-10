@@ -36,8 +36,9 @@ export async function createCheckoutSession(
             customerId = customers.data[0].id;
         }
 
+        // Explicitly set the base URL for production
         const baseUrl = process.env.NODE_ENV === 'production'
-            ? `https://${process.env.VERCEL_URL}`
+            ? 'https://e-shop-rho-gold.vercel.app' // Replace with your primary production domain
             : `${process.env.NEXT_PUBLIC_BASE_URL}`;
 
         // Include the auth token in the success URL
