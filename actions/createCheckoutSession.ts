@@ -1,15 +1,14 @@
-'use server'
+'use server';
 
 import stripe from "@/lib/stripe";
 import { BasketItem } from "../store/store";
 import { urlFor } from "@/lib/imageUrl";
 
-
 export type Metadata = {
     orderNumber: string;
     customerName: string;
     customerEmail: string;
-    clerkUserId: string;
+    clerkUserId: string; // Assuming this is the user's authentication token or ID
 };
 
 export type GroupedBasketItem = {
@@ -27,7 +26,6 @@ export async function createCheckoutSession(
             throw new Error("Some items do not have a price");
         }
 
-
         const customers = await stripe.customers.list({
             email: metadata.customerEmail,
             limit: 1,
@@ -42,7 +40,8 @@ export async function createCheckoutSession(
             ? `https://${process.env.VERCEL_URL}`
             : `${process.env.NEXT_PUBLIC_BASE_URL}`;
 
-        const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`;
+        // Include the auth token in the success URL
+        const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}&authToken=${metadata.clerkUserId}`;
         const cancelUrl = `${baseUrl}/basket`;
 
         const session = await stripe.checkout.sessions.create({
@@ -52,7 +51,7 @@ export async function createCheckoutSession(
             metadata,
             mode: "payment",
             allow_promotion_codes: true,
-            success_url:successUrl,
+            success_url: successUrl,
             cancel_url: cancelUrl,
             line_items: items.map((item) => ({
                 price_data: {
@@ -72,7 +71,8 @@ export async function createCheckoutSession(
                 quantity: item.quantity,
             })),
         });
-        return session.url
+
+        return session.url;
     } catch (error) {
         console.error("Error creating checkout session:", error);
         throw error;

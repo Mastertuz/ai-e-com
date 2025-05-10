@@ -30,7 +30,6 @@ export function CategorySelectorComponent({
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string>("");
   const router = useRouter();
-  console.log("Categories", categories.map((c) => c.title));
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

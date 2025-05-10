@@ -6,7 +6,6 @@ async function CategoryPage(
     
     { params }: { params: Promise<{ slug: string }>}) {
     const { slug } = await params;
-    console.log('slug', slug);
     const products = await getProductsByCategory(slug);
     const categories = await getAllCategories();
 
