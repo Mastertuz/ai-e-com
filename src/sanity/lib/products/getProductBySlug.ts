@@ -24,3 +24,4 @@ export const getProductBySlug = async (slug: string) => {
       return null;
     }
   };
+  
