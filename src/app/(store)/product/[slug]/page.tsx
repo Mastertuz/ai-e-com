@@ -125,7 +125,7 @@ async function ProductPage({
           ) : (
             <div className="text-white text-lg">No similar products found.</div>
           )}
-          <div className="mb-6">
+          <div className="my-6">
             <div className="text-white text-xl mb-2">
               Items available: <span className="font-bold">{product.stock}</span>
             </div>
