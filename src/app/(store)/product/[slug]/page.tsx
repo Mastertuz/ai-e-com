@@ -12,29 +12,39 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-async function getSimilarProductName(productName: string): Promise<{ name: string; image: string; link: string } | null> {
+async function getSimilarProductName(productName: string): Promise<{ name: string; link: string }[] | null> {
   const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     store: true,
     messages: [
       {
         role: "user",
-        content: `Suggest a similar product to "${productName}" and return only an object that contains name and link that will lead to google search page of that product. Don't send any text in response, just the object.`,
+        content: `Suggest a similar product to "${productName}" and return only an array of objects that contains name and link that will lead to google search page of that product (give me 1 to 3 products). Don't send any text in response, just the object.`,
       },
     ],
   });
 
   try {
-    const responseContent = completion.choices[0].message.content ?? "{}";
+    let responseContent = completion.choices[0].message.content ?? "[]";
+
+    // Remove code block markers if present
+    if (responseContent.startsWith("```") && responseContent.endsWith("```")) {
+      responseContent = responseContent.replace(/^```[a-zA-Z]*\n/, "").replace(/```$/, "");
+    }
 
     // Validate if the response is valid JSON
-    if (!responseContent.trim().startsWith("{") || !responseContent.trim().endsWith("}")) {
+    if (!responseContent.trim().startsWith("[") || !responseContent.trim().endsWith("]")) {
       console.error("Invalid AI response format:", responseContent);
       return null;
     }
 
-    const similarProduct = JSON.parse(responseContent);
-    return similarProduct;
+    const similarProducts = JSON.parse(responseContent);
+    if (!Array.isArray(similarProducts)) {
+      console.error("AI response is not an array:", responseContent);
+      return null;
+    }
+
+    return similarProducts;
   } catch (error) {
     console.error("Error parsing AI response:", error);
     return null;
@@ -55,9 +65,9 @@ async function ProductPage({
     return notFound();
   }
 
-  let similar = null;
+  let similar: { name: string; link: string }[] | null = null;
 
-  // Fetch and log similar product name
+  // Fetch and log similar product names
   if (product.name) {
     similar = await getSimilarProductName(product.name);
     console.log(similar);
@@ -98,18 +108,22 @@ async function ProductPage({
             </div>
           </div>
           <div className="text-white text-3xl mb-6">
-            AI similar product for {product.name}:
+            AI similar products for {product.name}:
           </div>
-          {similar && similar.name  && similar.link ? (
-            <div className="border rounded-lg p-4 bg-gray-800">
-              <a href={similar.link} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4">
-                <div>
-                  <h2 className="text-lg text-white font-bold underline">{similar.name}</h2>
+          {similar && similar.length > 0 ? (
+            <div className="space-y-4">
+              {similar.map((item, index) => (
+                <div key={index} className="border rounded-lg p-4 bg-gray-800">
+                  <a href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4">
+                    <div>
+                      <h2 className="text-lg text-white font-bold underline">{item.name}</h2>
+                    </div>
+                  </a>
                 </div>
-              </a>
+              ))}
             </div>
           ) : (
-            <div className="text-white text-lg">No similar product found.</div>
+            <div className="text-white text-lg">No similar products found.</div>
           )}
           <div className="mb-6">
             <div className="text-white text-xl mb-2">
