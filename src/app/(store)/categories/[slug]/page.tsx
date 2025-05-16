@@ -11,7 +11,7 @@ async function CategoryPage(
 
     return (
         <div className="flex flex-col items-center justify-top min-h-screen  p-4">
-            <div className=" p-8 rounded-lg shadow-md w-full ">
+            <div className=" p-8 rounded-lg  w-full ">
                 <h1 className="text-3xl font-bold mb-6 text-center text-white">
                     {slug
                         .split("-")
