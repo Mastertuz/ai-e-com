@@ -13,7 +13,7 @@ async function Orders() {
   const orders = await getMyOrders(userId);
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <div className=" p-4 sm:p-8 rounded-xl shadow-lg w-full max-w-4xl">
+      <div className=" p-4 sm:p-8 rounded-xl  w-full max-w-4xl">
         <h1 className="text-4xl font-bold tracking-tight text-white mb-8">My Orders</h1>
         <div>
           {orders.length === 0 ? (
